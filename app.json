@@ -2,6 +2,10 @@
   "expo": {
     "name": "food-delivery-app",
     "slug": "food-delivery-app",
+    "scheme": "food-delivery-app", // food-delivery-app://
+    "experiments": {
+      "typedRoutes": true
+    },
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
