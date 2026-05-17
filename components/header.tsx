@@ -24,24 +24,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
     backgroundColor: colors.primary,
 
-    // iOS shadow
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
-
-    // Android shadow
     elevation: 6,
   },
   side: {
-    minWidth: 40,
+    width: 56,
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
   center: {
     flex: 1,
+    height: "100%",
+    justifyContent: "center",
     alignItems: "stretch",
   },
 });

@@ -18,6 +18,7 @@ export const SearchBar = () => {
 
 const styles = StyleSheet.create({
   searchField: {
+    marginHorizontal: 8,
     paddingHorizontal: 12,
     backgroundColor: colors.surface,
     borderRadius: 8,

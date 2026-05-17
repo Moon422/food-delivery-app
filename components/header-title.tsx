@@ -5,10 +5,10 @@ interface HeaderTitleProps {
   title: string;
 }
 
-const HeaderTitle = ({}: HeaderTitleProps) => {
+const HeaderTitle = ({ title }: HeaderTitleProps) => {
   return (
     <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">
-      Food
+      {title}
     </Text>
   );
 };
@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: colors.surface,
-    textAlign: "center",
+    includeFontPadding: false,
+    textAlignVertical: "center",
   },
 });
 
