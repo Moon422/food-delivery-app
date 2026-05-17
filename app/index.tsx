@@ -1,14 +1,15 @@
 import React from "react";
-import { Text, View } from "react-native";
 import { SearchBar } from "../components/search-bar";
 import CategoryCatalog from "../components/category-catalog";
+import PageView from "../components/page-view";
+import Header from "../components/header";
 
 const Home = () => {
   return (
-    <View>
-      <SearchBar />
+    <PageView>
+      <Header centerElement={<SearchBar />} />
       <CategoryCatalog />
-    </View>
+    </PageView>
   );
 };
 

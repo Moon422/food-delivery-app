@@ -1,4 +1,5 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import colors from "../constants/colors";
 
 type CategoryType = {
   id: number;
@@ -75,18 +76,19 @@ const CATEGORIES: CategoryType[] = [
 
 const CategoryFilter = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={CATEGORIES}
         keyExtractor={(item) => `coffee-types-${item.id}`}
         horizontal
         showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.categoryFilterContainer}
         renderItem={({ item }) => (
           <Pressable
             style={styles.categoryFilterBadge}
             onPress={() => console.log(item.name)}
           >
-            <Text>{item.name}</Text>
+            <Text style={styles.categoryFilterBadgeText}>{item.name}</Text>
           </Pressable>
         )}
       />
@@ -103,7 +105,22 @@ export const CategoryCatalog = () => {
 };
 
 const styles = StyleSheet.create({
-  categoryFilterBadge: {},
+  container: {
+    marginTop: 8,
+    marginHorizontal: 8,
+  },
+  categoryFilterContainer: {
+    gap: 8,
+  },
+  categoryFilterBadge: {
+    backgroundColor: colors.primary,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+  },
+  categoryFilterBadgeText: {
+    color: colors.surface,
+  },
 });
 
 export default CategoryCatalog;

@@ -1,10 +1,16 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
+import PageView from "../../components/page-view";
+import Header from "../../components/header";
+import HeaderTitle from "../../components/header-title";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { router } from "expo-router";
 
 const Food = () => {
   return (
-    <View>
-      <Text>Fuck</Text>
-    </View>
+    <PageView>
+      <Header centerElement={<HeaderTitle title="Food" />} />
+      <Text>Fuchka</Text>
+    </PageView>
   );
 };
 
