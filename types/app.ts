@@ -1,5 +1,6 @@
-import { Category } from "./coffee";
+import { Coffee, CoffeeCategory } from "./coffee";
 
 export interface AppContextType {
-  categories: Category[];
+  categories: CoffeeCategory[];
+  coffees: Coffee[];
 }
