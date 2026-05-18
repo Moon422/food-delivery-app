@@ -1,13 +1,18 @@
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import colors from "../constants/colors";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type PageViewProps = {
   children: ReactNode;
 };
 
 const PageView = ({ children }: PageViewProps) => {
-  return <View style={styles.container}>{children}</View>;
+  return (
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+      {children}
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({

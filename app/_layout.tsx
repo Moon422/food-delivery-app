@@ -1,27 +1,21 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { AppProvider } from "../context/app-context";
 
 const RootLayout = () => {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.layout} edges={["top", "left", "right"]}>
+      <AppProvider>
         <Stack
           screenOptions={{
             headerShown: false,
           }}
         />
-        <StatusBar style="inverted" />
-      </SafeAreaView>
+      </AppProvider>
+      <StatusBar style="inverted" />
     </SafeAreaProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  layout: {
-    flex: 1,
-  },
-});
 
 export default RootLayout;
