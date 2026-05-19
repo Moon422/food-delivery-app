@@ -18,11 +18,11 @@ const ProductBox = ({ coffee }: ProductBoxProps) => {
   return (
     <View style={styles.productBoxContainer}>
       {/* Image */}
-      {/* <Image
+      <Image
         source={{ uri: coffee.imageUrl }}
         style={styles.image}
         resizeMode="cover"
-      /> */}
+      />
 
       {/* Category */}
       <Text style={styles.categoryName} numberOfLines={1}>
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   productBoxContainer: {
     flex: 1,
     backgroundColor: colors.surface,
-    margin: 8,
     borderRadius: 16,
     padding: 12,
 
