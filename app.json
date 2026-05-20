@@ -2,7 +2,7 @@
   "expo": {
     "name": "food-delivery-app",
     "slug": "food-delivery-app",
-    "scheme": "food-delivery-app", // food-delivery-app://
+    "scheme": "food-delivery-app",
     "experiments": {
       "typedRoutes": true
     },
@@ -16,7 +16,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.fooddeliveryapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +26,8 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.fooddeliveryapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
