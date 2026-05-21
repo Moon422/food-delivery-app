@@ -13,7 +13,7 @@ const RootLayout = () => {
           }}
         />
       </AppProvider>
-      <StatusBar style="inverted" />
+      <StatusBar style="auto" />
     </SafeAreaProvider>
   );
 };

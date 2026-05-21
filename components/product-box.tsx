@@ -3,6 +3,7 @@ import { Coffee } from "../types";
 import { useAppContext } from "../context/app-context";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../constants/colors";
+import { useRouter } from "expo-router";
 
 interface ProductBoxProps {
   coffee: Coffee;
@@ -10,13 +11,18 @@ interface ProductBoxProps {
 
 const ProductBox = ({ coffee }: ProductBoxProps) => {
   const { categories } = useAppContext();
+  const router = useRouter();
 
   const categoryName = categories.find(
     (el) => el.id === coffee.coffeeCategoryId,
   )?.name;
 
+  const onPress = () => {
+    router.push(`/food/${coffee.id}`);
+  };
+
   return (
-    <View style={styles.productBoxContainer}>
+    <Pressable style={styles.productBoxContainer} onPress={onPress}>
       {/* Image */}
       <Image
         source={{ uri: coffee.imageUrl }}
@@ -42,7 +48,7 @@ const ProductBox = ({ coffee }: ProductBoxProps) => {
           <Ionicons name="add" size={18} color="#fff" />
         </Pressable>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

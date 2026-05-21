@@ -11,6 +11,7 @@ import {
   CategoryFilterProvider,
   useCategoryFilterContext,
 } from "../context/category-filter-context";
+import { useMemo } from "react";
 
 const CategoryFilter = () => {
   const { categories } = useAppContext();
@@ -50,10 +51,12 @@ const CoffeeList = () => {
   const { selectedCategoryId } = useCategoryFilterContext();
   const { coffees } = useAppContext();
 
-  const filteredCoffees = coffees.filter(
-    (c) =>
-      selectedCategoryId === 0 || c.coffeeCategoryId === selectedCategoryId,
-  );
+  const filteredCoffees = useMemo(() => {
+    return coffees.filter(
+      (c) =>
+        selectedCategoryId === 0 || c.coffeeCategoryId === selectedCategoryId,
+    );
+  }, [coffees, selectedCategoryId]);
 
   return (
     <Animated.FlatList
@@ -65,7 +68,7 @@ const CoffeeList = () => {
       removeClippedSubviews={false}
       initialNumToRender={10}
       windowSize={10}
-      itemLayoutAnimation={LinearTransition.duration(220)}
+      itemLayoutAnimation={LinearTransition.duration(250)}
       renderItem={({ item }) => (
         <Animated.View
           style={styles.coffeeItem}

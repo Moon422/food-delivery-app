@@ -3,10 +3,12 @@ import PageView from "../../components/page-view";
 import Header from "../../components/header";
 import HeaderTitle from "../../components/header-title";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import colors from "../../constants/colors";
 
 const Food = () => {
+  const { id } = useLocalSearchParams();
+
   return (
     <PageView>
       <Header
@@ -19,7 +21,7 @@ const Food = () => {
         }
         centerElement={<HeaderTitle title="Food" />}
       />
-      <Text>Fuchka</Text>
+      <Text>Fuchka: {id}</Text>
     </PageView>
   );
 };
