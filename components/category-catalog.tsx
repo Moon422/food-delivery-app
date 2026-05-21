@@ -1,8 +1,12 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import Animated, {
+  ZoomIn,
+  ZoomOut,
+  LinearTransition,
+} from "react-native-reanimated";
 import colors from "../constants/colors";
 import { useAppContext } from "../context/app-context";
 import ProductBox from "./product-box";
-import { useState } from "react";
 import {
   CategoryFilterProvider,
   useCategoryFilterContext,
@@ -46,20 +50,30 @@ const CoffeeList = () => {
   const { selectedCategoryId } = useCategoryFilterContext();
   const { coffees } = useAppContext();
 
+  const filteredCoffees = coffees.filter(
+    (c) =>
+      selectedCategoryId === 0 || c.coffeeCategoryId === selectedCategoryId,
+  );
+
   return (
-    <FlatList
-      data={coffees.filter(
-        (c) =>
-          selectedCategoryId === 0 || c.coffeeCategoryId === selectedCategoryId,
-      )}
+    <Animated.FlatList
+      data={filteredCoffees}
       keyExtractor={(item) => `coffee-${item.id}`}
       numColumns={2}
-      contentContainerStyle={styles.coffeeListContainer}
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.coffeeListContainer}
+      removeClippedSubviews={false}
+      initialNumToRender={10}
+      windowSize={10}
+      itemLayoutAnimation={LinearTransition.duration(220)}
       renderItem={({ item }) => (
-        <View style={styles.coffeeItem}>
+        <Animated.View
+          style={styles.coffeeItem}
+          entering={ZoomIn}
+          exiting={ZoomOut}
+        >
           <ProductBox coffee={item} />
-        </View>
+        </Animated.View>
       )}
     />
   );
