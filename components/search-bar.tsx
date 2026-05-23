@@ -10,7 +10,6 @@ export const SearchBar = () => {
         returnKeyType="search"
         autoCorrect={false}
         clearButtonMode="while-editing"
-        onSubmitEditing={(e) => router.push({ pathname: "/food" })}
       />
     </View>
   );

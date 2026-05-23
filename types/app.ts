@@ -10,3 +10,9 @@ export interface CategoryFilterContextType {
   selectedCategoryId: number;
   setSelectedCategoryId: Dispatch<SetStateAction<number>>;
 }
+
+export interface FavoriteCoffees {
+  favoriteCoffeeIds: number[];
+  addToFavorite: (coffeeId: number) => boolean;
+  removeFromFavorite: (coffeeId: number) => boolean;
+}

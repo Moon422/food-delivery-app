@@ -33,13 +33,25 @@ const CategoryFilter = () => {
               {
                 backgroundColor:
                   selectedCategoryId === item.id
-                    ? colors.secondary
-                    : colors.primary,
+                    ? colors.primary
+                    : colors.surface,
               },
             ]}
             onPress={() => setSelectedCategoryId(() => item.id)}
           >
-            <Text style={styles.categoryFilterBadgeText}>{item.name}</Text>
+            <Text
+              style={[
+                styles.categoryFilterBadgeText,
+                {
+                  color:
+                    selectedCategoryId === item.id
+                      ? colors.surface
+                      : colors.primary,
+                },
+              ]}
+            >
+              {item.name}
+            </Text>
           </Pressable>
         )}
       />
@@ -103,9 +115,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   categoryFilterBadge: {
-    backgroundColor: colors.primary,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderWidth: 2,
+    borderColor: colors.primary,
     borderRadius: 8,
   },
   categoryFilterBadgeText: {
