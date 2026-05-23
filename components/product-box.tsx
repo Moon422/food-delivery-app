@@ -42,7 +42,7 @@ const ProductBox = ({ coffee }: ProductBoxProps) => {
 
       {/* Price + button */}
       <View style={styles.priceBox}>
-        <Text style={styles.price}>${coffee.price}</Text>
+        <Text style={styles.price}>$ {coffee.price.toFixed(2)}</Text>
 
         <Pressable style={styles.addButton}>
           <Ionicons name="add" size={18} color="#fff" />

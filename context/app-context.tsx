@@ -82,7 +82,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       imageUrl: "https://picsum.photos/seed/espresso/300/300",
       price: 3.5,
       coffeeCategoryId: 1,
-      description: "Single shot of rich espresso.",
+      description:
+        "Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso. Single shot of rich espresso.",
     },
     {
       id: 102,

@@ -16,17 +16,23 @@ import { useFavoriteCoffeeContext } from "../../context/favorite-coffees-context
 import { useAppContext } from "../../context/app-context";
 import { useMemo, useState } from "react";
 
+const DESCRIPTION_LIMIT = 120;
+
+const COFFEE_SIZES = [
+  { systemName: "small", text: "S" },
+  { systemName: "medium", text: "M" },
+  { systemName: "large", text: "L" },
+];
+
 const Food = () => {
-  const DESCRIPTION_LIMIT = 120;
-
   const { id } = useLocalSearchParams();
-
   const coffeeId = Number(id);
 
   const { coffees, categories } = useAppContext();
-
   const { favoriteCoffeeIds, addToFavorite, removeFromFavorite } =
     useFavoriteCoffeeContext();
+
+  const [expanded, setExpanded] = useState(false);
 
   const selectedCoffee = useMemo(
     () => coffees.find((c) => c.id === coffeeId),
@@ -40,13 +46,19 @@ const Food = () => {
 
   const isFavorited = favoriteCoffeeIds.includes(coffeeId);
 
-  const coffeeSizes = [
-    { systemName: "small", text: "S" },
-    { systemName: "medium", text: "M" },
-    { systemName: "large", text: "L" },
-  ];
+  const description = selectedCoffee?.description ?? "";
 
-  const onFavoriteButtonPressed = () => {
+  const isLongDescription = description.length > DESCRIPTION_LIMIT;
+
+  const displayedDescription = useMemo(() => {
+    if (!isLongDescription) return description;
+
+    return expanded
+      ? description
+      : description.slice(0, DESCRIPTION_LIMIT) + "...";
+  }, [description, expanded, isLongDescription]);
+
+  const toggleFavorite = () => {
     if (isFavorited) {
       removeFromFavorite(coffeeId);
     } else {
@@ -54,16 +66,9 @@ const Food = () => {
     }
   };
 
-  const [expanded, setExpanded] = useState(false);
-
-  const description = selectedCoffee?.description ?? "";
-
-  const isLongDescription = description.length > DESCRIPTION_LIMIT;
-
-  const displayedDescription =
-    isLongDescription && !expanded
-      ? description.slice(0, DESCRIPTION_LIMIT) + "..."
-      : description;
+  const toggleDescription = () => {
+    setExpanded((prev) => !prev);
+  };
 
   return (
     <PageView>
@@ -77,7 +82,7 @@ const Food = () => {
         }
         centerElement={<HeaderTitle title="Details" />}
         rightElement={
-          <Pressable onPress={onFavoriteButtonPressed}>
+          <Pressable onPress={toggleFavorite}>
             <Ionicons
               name={isFavorited ? "heart" : "heart-outline"}
               size={26}
@@ -87,20 +92,19 @@ const Food = () => {
         }
       />
 
-      <ScrollView style={{ padding: 12 }}>
-        {/* Image */}
+      <ScrollView style={styles.container}>
+        {/* IMAGE */}
         <Image
           source={{ uri: selectedCoffee?.imageUrl }}
           style={styles.coffeeBannerImage}
-          resizeMode="cover"
         />
 
-        {/* Title */}
+        {/* TITLE */}
         <Text style={styles.coffeeTitle} numberOfLines={1}>
           {selectedCoffee?.name ?? "Unnamed"}
         </Text>
 
-        {/* Category + Add button */}
+        {/* CATEGORY */}
         <View style={styles.categoryRow}>
           {selectedCategory && (
             <Text style={styles.categoryText}>{selectedCategory.name}</Text>
@@ -111,10 +115,9 @@ const Food = () => {
           </Pressable>
         </View>
 
-        {/* Rating */}
+        {/* RATING */}
         <View style={styles.ratingRow}>
           <Ionicons name="star" size={18} color={colors.primary} />
-
           <Text style={styles.ratingText}>
             4.8 <Text style={styles.ratingCount}>(230)</Text>
           </Text>
@@ -122,59 +125,73 @@ const Food = () => {
 
         <View style={styles.hr} />
 
+        {/* DESCRIPTION */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Description</Text>
 
-          <Text style={styles.descriptionText}>{displayedDescription}</Text>
-
-          {isLongDescription && (
-            <Pressable onPress={() => setExpanded((prev) => !prev)}>
-              <Text style={styles.readMoreText}>
-                {expanded ? "Show less" : "Read more"}
+          <Text style={styles.descriptionText}>
+            {displayedDescription}{" "}
+            {isLongDescription && (
+              <Text onPress={toggleDescription} style={styles.readMoreText}>
+                {expanded ? " Show less" : " Read more"}
               </Text>
-            </Pressable>
-          )}
+            )}
+          </Text>
         </View>
 
+        {/* SIZE */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Size</Text>
 
           <View style={styles.sizeRow}>
-            {coffeeSizes.map((cs) => (
-              <Pressable
-                key={`coffee-details-sizes-${cs.systemName}`}
-                style={styles.sizeBox}
-              >
+            {COFFEE_SIZES.map((cs) => (
+              <Pressable key={cs.systemName} style={styles.sizeBox}>
                 <Text style={styles.sizeText}>{cs.text}</Text>
               </Pressable>
             ))}
           </View>
         </View>
       </ScrollView>
+      <View style={styles.bottomActionBar}>
+        <View>
+          <Text style={styles.priceLabel}>Price</Text>
+          <Text style={styles.priceValue}>
+            $ {(selectedCoffee?.price ?? 0).toFixed(2)}
+          </Text>
+        </View>
+
+        <Pressable style={styles.buyButton}>
+          <Text style={styles.buyButtonText}>Buy Now</Text>
+        </Pressable>
+      </View>
     </PageView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 12,
+  },
+
   coffeeBannerImage: {
     width: "100%",
     height: 220,
     borderRadius: 12,
-    marginBottom: 20,
-    backgroundColor: "#eee",
+    marginBottom: 15,
+    backgroundColor: colors.surface,
   },
 
   coffeeTitle: {
     fontSize: 25,
     fontWeight: "700",
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   categoryRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   categoryText: {
@@ -193,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   ratingText: {
@@ -211,11 +228,11 @@ const styles = StyleSheet.create({
   hr: {
     height: 1,
     backgroundColor: "#e0e0e0",
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   section: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   sectionTitle: {
@@ -258,6 +275,51 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "600",
     color: colors.primary,
+  },
+
+  bottomActionBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 50,
+    backgroundColor: colors.surface,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+
+  priceLabel: {
+    fontSize: 12,
+    color: "#888",
+    marginBottom: 2,
+  },
+
+  priceValue: {
+    fontSize: 18,
+    fontWeight: "800",
+    color: "#111",
+  },
+
+  buyButton: {
+    backgroundColor: colors.primary,
+    paddingVertical: 12,
+    paddingHorizontal: 26,
+    borderRadius: 14,
+    flex: 1,
+  },
+
+  buyButtonText: {
+    color: colors.surface,
+    fontSize: 15,
+    fontWeight: "700",
+    textAlign: "center",
   },
 });
 
